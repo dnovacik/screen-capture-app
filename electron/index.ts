@@ -25,8 +25,8 @@ const createTray = () => {
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width: 320,
+    height: 400,
     frame: false,
     icon: image,
     webPreferences: {

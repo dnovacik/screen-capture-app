@@ -58,14 +58,17 @@ const Navbar = {
     display: flex;
     -webkit-app-region: no-drag;
     display: flex;
-    margin: 10px 10px 0 0;
+    margin: 5px 5px 0 0;
     z-index: 1;
   `,
   ButtonWrapper: Styled.div`
     display: flex;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
     margin-left: 15px;
+    width: 25px;
+    height: 25px;
 
     &:hover {
       & > svg > line {
