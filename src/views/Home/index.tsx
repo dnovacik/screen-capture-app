@@ -14,8 +14,9 @@ type RecordButtonsProps = {
   isRecording: boolean
 }
 
+let mediaRecorder: MediaRecorder
+
 const HomeView = () => {
-  let mediaRecorder: MediaRecorder
   const recording = Array<Blob>()
   const [sources, setSources] = useState<{ loaded: boolean, sources: Array<DesktopCaptureSource> }>({ loaded: false, sources: [] })
   const [isRecording, setIsRecording] = useState(false)
@@ -37,12 +38,12 @@ const HomeView = () => {
 
   const handleStop = async () => {
     const blob = new Blob(recording, {
-      type: 'video/mp4; codecs=mp4a.40.2'
+      type: 'video/webm'
     })
 
     const buffer = Buffer.from(await blob.arrayBuffer())
 
-    const { filePath } = await showSaveDialog('Save Recording', `capture-${Date.now()}`)
+    const { filePath } = await showSaveDialog('Save Recording', `capture-${Date.now()}.mp4`)
 
     if (filePath) {
       writeFile(filePath, buffer)
@@ -63,18 +64,29 @@ const HomeView = () => {
     const mediaDevices = navigator.mediaDevices as any
     const stream = await mediaDevices.getUserMedia(CONSTRAINTS_SETTINGS)
 
-    mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/mp4; codecs=mp4a.40.2' })
+    mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' })
 
     mediaRecorder.ondataavailable = handleDataAvailable
     mediaRecorder.onstop = handleStop
   }
 
   const startRecording = () => {
+    setIsRecording(true)
     mediaRecorder.start()
   }
 
   const stopRecording = () => {
+    setIsRecording(false)
     mediaRecorder.stop()
+  }
+
+  const handleRecordButtonClicked = async () => {
+    if (isRecording) {
+      stopRecording()
+    } else {
+      await onSourceSelected(sources.sources[0])
+      startRecording()
+    }
   }
 
   return (
@@ -83,7 +95,7 @@ const HomeView = () => {
         sources.loaded
           ? <>
             <Home.Title>Screen Capture</Home.Title>
-            <Home.Record isRecording></Home.Record>
+            <Home.Record isRecording onClick={() => handleRecordButtonClicked()}>Record</Home.Record>
           </>
           : <>
             <Home.Loading>Loading...</Home.Loading>

@@ -30,6 +30,7 @@ const createWindow = () => {
     frame: false,
     icon: image,
     webPreferences: {
+      enableRemoteModule: true,
       webSecurity: true,
       nodeIntegration: false,
       contextIsolation: true,
