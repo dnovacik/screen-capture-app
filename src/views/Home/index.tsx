@@ -69,6 +69,14 @@ const HomeView = () => {
     mediaRecorder.onstop = handleStop
   }
 
+  const startRecording = () => {
+    mediaRecorder.start()
+  }
+
+  const stopRecording = () => {
+    mediaRecorder.stop()
+  }
+
   return (
     <Home.Layout>
       {
