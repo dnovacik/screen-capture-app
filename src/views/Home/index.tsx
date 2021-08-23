@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import Styled from 'styled-components'
 
-const { getVideoSources, writeFile, showSaveDialog } = window.ipcRenderer
+const { getVideoSources, writeFile, showSaveDialog, openMenu } = window.ipcRenderer
 
 type DesktopCaptureSource = {
   display_id: string;
@@ -50,7 +50,7 @@ const HomeView = () => {
     }
   }
 
-  const onSourceSelected = async (source: DesktopCaptureSource) => {
+  const onSourceSelected = async (source: { id: string, name: string }) => {
     const CONSTRAINTS_SETTINGS = {
       audio: false,
       video: {
@@ -80,11 +80,14 @@ const HomeView = () => {
     mediaRecorder.stop()
   }
 
+  const displayMenu = () => {
+    openMenu(sources.sources, onSourceSelected)
+  }
+
   const handleRecordButtonClicked = async () => {
     if (isRecording) {
       stopRecording()
     } else {
-      await onSourceSelected(sources.sources[0])
       startRecording()
     }
   }
@@ -95,6 +98,7 @@ const HomeView = () => {
         sources.loaded
           ? <>
             <Home.Title>Screen Capture</Home.Title>
+            <Home.Select onClick={() => displayMenu()}>Select Source</Home.Select>
             <Home.Record isRecording onClick={() => handleRecordButtonClicked()}>Record</Home.Record>
           </>
           : <>
@@ -124,7 +128,11 @@ const Home = {
   width: 100%;
   justify-content: center;
   `,
+  Select: Styled.div`
+  display: flex;
+  `,
   Record: Styled.div<RecordButtonsProps>`
+  display: flex;
 
   `
 }
