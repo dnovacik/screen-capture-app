@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import Styled from 'styled-components'
 
-const { getVideoSources, writeFile, showSaveDialog, openMenu, getWindowProperties } = window.ipcRenderer
+const { getVideoSources, writeFile, showSaveDialog, openMenu } = window.ipcRenderer
 
 type DesktopCaptureSource = {
   display_id: string;
