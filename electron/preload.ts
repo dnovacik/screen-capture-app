@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer, desktopCapturer, remote, DesktopCapturerSource } from 'electron'
+import { contextBridge, ipcRenderer, desktopCapturer, remote } from 'electron'
 import { writeFile } from 'fs'
 
 contextBridge.exposeInMainWorld('ipcRenderer', {
@@ -22,7 +22,6 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
     )
 
     menu.popup()
-  }
-  ,
+  },
   test: () => ipcRenderer.send('test')
-})
+}) 

@@ -9,6 +9,7 @@ export interface IIpcRenderer {
   writeFile: (path: string, buffer: Buffer) => void,
   showSaveDialog: (label: string, defaultPath: string) => Promise<SaveDialogReturnValue>,
   openMenu: (sources: Array<{ id: string, name: string }>, onSelected: (selected: { id: string, name: string }) => Promise<void>) => Electron.Menu,
+  getWindowProperties: (id: string) => void,
   test: () => void
 }
 

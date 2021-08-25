@@ -15,8 +15,8 @@ let tray: Tray | null = null
 const createTray = () => {
   tray = new Tray(image)
 
-  tray.setTitle('Electron App')
-  tray.setToolTip('Electron App')
+  tray.setTitle('Screen Capture App')
+  tray.setToolTip('Screen Capture App')
 
   tray.on('click', () => {
     toggleWindow()
@@ -29,6 +29,7 @@ const createWindow = () => {
     height: 400,
     frame: false,
     icon: image,
+    title: 'Screen Capture App',
     webPreferences: {
       enableRemoteModule: true,
       webSecurity: true,
